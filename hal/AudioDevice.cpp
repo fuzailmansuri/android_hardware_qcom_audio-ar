@@ -2458,8 +2458,8 @@ void AudioDevice::FillAndroidDeviceMap() {
     android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLUETOOTH_A2DP, PAL_DEVICE_OUT_BLUETOOTH_A2DP));
     android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLE_HEADSET, PAL_DEVICE_OUT_BLUETOOTH_BLE));
     android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLE_SPEAKER, PAL_DEVICE_OUT_BLUETOOTH_BLE));
-    //android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES, PAL_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES));
-    //android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER, PAL_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER));
+    android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_HEADPHONES, PAL_DEVICE_OUT_BLUETOOTH_A2DP));
+    android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_BLUETOOTH_A2DP_SPEAKER, PAL_DEVICE_OUT_BLUETOOTH_A2DP));
     android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_AUX_DIGITAL, PAL_DEVICE_OUT_AUX_DIGITAL));
     android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_HDMI, PAL_DEVICE_OUT_HDMI));
     //android_device_map_.insert(std::make_pair(AUDIO_DEVICE_OUT_ANLG_DOCK_HEADSET, PAL_DEVICE_OUT_ANLG_DOCK_HEADSET));
@@ -2546,8 +2546,10 @@ int AudioDevice::GetPalDeviceIds(const std::set<audio_devices_t>& hal_device_ids
             } else {
                pal_device_id[device_count] = it->second;
             }
+            ++device_count;
+        } else {
+            AHAL_ERR("No PAL device for hal device 0x%x", hal_device_id);
         }
-        ++device_count;
     }
 
 error:
